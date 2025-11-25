@@ -1,0 +1,15 @@
+numeros = [25, 12, 30, 10, 8]
+suma = 0
+suma_each = 0
+
+# Recorrido tradicional (por índice)
+for i in range(len(numeros)):
+    suma += numeros[i]
+
+# Recorrido for-each (por elemento)
+for elemento in numeros:
+    suma_each += elemento
+
+print(f"Array: {numeros}")
+print(f"Suma por índice: {suma}")
+print(f"Suma por for-each: {suma_each}")

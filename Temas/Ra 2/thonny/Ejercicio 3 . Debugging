@@ -1,0 +1,8 @@
+mi_array = [10, 20, 30] # Longitud N=3. Índices válidos: 0, 1, 2.
+
+# Error: mi_array[3] causaría un IndexError (índice fuera de rango)
+
+# Corrección: Acceder al último elemento correctamente (índice N-1 o -1)
+ultimo_elemento = mi_array[len(mi_array) - 1] 
+ultimo_con_negativo = mi_array[-1] 
+print(f"Acceso corregido al último elemento (valor {ultimo_con_negativo})")

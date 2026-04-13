@@ -1,0 +1,24 @@
+import java.util.*;
+
+public class Ejercicio5 {
+    public static void main(String[] args) {
+        Set<Integer> conjunto = new HashSet<>();
+
+        for (int i = 1; i <= 5; i++) {
+            conjunto.add(i);
+        }
+
+        System.out.println(conjunto);
+
+        conjunto.add(3);
+        
+        conjunto.add(null);
+
+        Set<Integer> primos = new HashSet<>(Arrays.asList(2, 3));
+        boolean esSubconjunto = conjunto.containsAll(primos);
+        System.out.println(esSubconjunto);
+
+        final List<Integer> lista = new ArrayList<>(conjunto);
+        System.out.println(lista);
+    }
+}

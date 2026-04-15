@@ -1,0 +1,37 @@
+import java.util.Objects;
+
+public class Persona implements Comparable<Persona> {
+    private String nombre;
+    private String apellidos;
+
+    public Persona(String nombre, String apellidos) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+    }
+
+    // Orden natural: Alfabético por nombre
+    @Override
+    public int compareTo(Persona otra) {
+        return this.nombre.compareTo(otra.nombre);
+    }
+
+    // Consistencia: Dos personas son iguales si tienen mismo nombre y apellidos
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Persona persona = (Persona) obj;
+        return Objects.equals(nombre, persona.nombre) && 
+               Objects.equals(apellidos, persona.apellidos);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nombre, apellidos);
+    }
+
+    @Override
+    public String toString() {
+        return nombre + " " + apellidos;
+    }
+}

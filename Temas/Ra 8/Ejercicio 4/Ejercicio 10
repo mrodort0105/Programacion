@@ -1,0 +1,93 @@
+import java.util.*;
+
+// --- Clase Persona con Orden Natural (Nombre) ---
+class Persona implements Comparable<Persona> {
+    private String nombre;
+    private String apellidos;
+    private int edad;
+
+    public Persona(String nombre, String apellidos, int edad) {
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.edad = edad;
+    }
+
+    // Getters
+    public String getNombre() { return nombre; }
+    public String getApellidos() { return apellidos; }
+    public int getEdad() { return edad; }
+
+    // Orden Natural: Alfabético por nombre
+    @Override
+    public int compareTo(Persona otra) {
+        return this.nombre.compareTo(otra.nombre);
+    }
+
+    // Consistencia para evitar duplicados en Sets (Nombre + Apellidos)
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Persona persona = (Persona) o;
+        return Objects.equals(nombre, persona.nombre) && Objects.equals(apellidos, persona.apellidos);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nombre, apellidos);
+    }
+
+    @Override
+    public String toString() {
+        String ape = (apellidos == null) ? "[SIN APELLIDO]" : apellidos;
+        return String.format("Nombre: %-10s | Apellidos: %-15s | Edad: %d", nombre, ape, edad);
+    }
+}
+
+// --- Clase Principal con todas las pruebas ---
+public class Main {
+
+    public static void main(String[] args) {
+        // 1. Colección inicial (TreeSet: No duplicados, Orden Natural)
+        Set<Persona> coleccionNatural = new TreeSet<>();
+        coleccionNatural.add(new Persona("Zaira", "García", 30));
+        coleccionNatural.add(new Persona("Alberto", "Sanz", 25));
+        coleccionNatural.add(new Persona("Beatriz", null, 40));
+        coleccionNatural.add(new Persona("Alberto", "Sanz", 25)); // Duplicado, no entrará
+
+        System.out.println("1. COLECCIÓN NATURAL (TreeSet - Por Nombre):");
+        coleccionNatural.forEach(System.out::println);
+
+        // Pasamos a una lista para aplicar los diferentes comparadores
+        List<Persona> lista = new ArrayList<>(coleccionNatural);
+        lista.add(new Persona("Ana", "Sanz", 20));
+        lista.add(new Persona("Carlos", null, 18));
+
+        // 2. Comparador por Edad
+        System.out.println("\n2. ORDENADO POR EDAD:");
+        lista.sort(Comparator.comparingInt(Persona::getEdad));
+        lista.forEach(System.out::println);
+
+        // 3. Comparador por Apellidos
+        System.out.println("\n3. ORDENADO POR APELLIDOS:");
+        lista.sort(Comparator.comparing(Persona::getApellidos, Comparator.nullsLast(Comparator.naturalOrder())));
+        lista.forEach(System.out::println);
+
+        // 4. Comparador Compuesto (Apellidos -> Nombre -> Edad) con NULOS AL PRINCIPIO
+        // Aquí resolvemos la ampliación
+        System.out.println("\n4. ORDEN COMPUESTO (Apellidos con nulos primero > Nombre > Edad):");
+        
+        Comparator<Persona> compCompuesto = Comparator
+                .comparing(Persona::getApellidos, Comparator.nullsFirst(String::compareTo))
+                .thenComparing(Persona::getNombre)
+                .thenComparingInt(Persona::getEdad);
+        
+        lista.sort(compCompuesto);
+        lista.forEach(System.out::println);
+
+        // 5. Orden de Inserción (Copia a LinkedHashSet)
+        System.out.println("\n5. COPIA A LINKEDHASHSET (Mantiene orden de la lista actual):");
+        Set<Persona> ordenInsercion = new LinkedHashSet<>(lista);
+        ordenInsercion.forEach(System.out::println);
+    }
+}

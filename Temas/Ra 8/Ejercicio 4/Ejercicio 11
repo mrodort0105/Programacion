@@ -1,0 +1,55 @@
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Scanner;
+
+public class GestionLibros {
+
+    public static void main(String[] args) {
+        HashSet<String> biblioteca = new HashSet<>();
+        Scanner scanner = new Scanner(System.in);
+        String opcion;
+
+        System.out.println("--- Gestión de Biblioteca (HashSet) ---");
+
+        // 1. Agregar libros
+        do {
+            System.out.print("Introduce el nombre del libro (o 'salir' para finalizar): ");
+            opcion = scanner.nextLine();
+
+            if (!opcion.equalsIgnoreCase("salir")) {
+                boolean agregado = biblioteca.add(opcion);
+                if (agregado) {
+                    System.out.println("Libro añadido con éxito.");
+                } else {
+                    System.out.println("El libro ya existe en la biblioteca (duplicado no permitido).");
+                }
+            }
+        } while (!opcion.equalsIgnoreCase("salir"));
+
+        // 2. Recorrer con for-each
+        System.out.println("\n--- Listado usando for-each ---");
+        for (String libro : biblioteca) {
+            System.out.println("- " + libro);
+        }
+
+        // 3. Recorrer con Iterator
+        System.out.println("\n--- Listado usando Iterator ---");
+        Iterator<String> it = biblioteca.iterator();
+        while (it.hasNext()) {
+            System.out.println("- " + it.next());
+        }
+
+        scanner.close();
+    }
+
+    /*
+     * REFLEXIÓN TÉCNICA:
+     * * 1. ¿Por qué HashSet no garantiza un orden específico?
+     * No tiene orden porque usa funciones hash para ubicar elementos por eficiencia, no por posición o entrada.
+     * * 2. ¿Cuándo sería preferible usar un Iterator en lugar de un for-each?
+     * Cuando necesitas eliminar elementos mientras recorres la lista sin causar errores.
+     * * 3. ¿Qué pasaría si intentamos modificar el Set mientras iteramos con for-each?
+     * Lanza una ConcurrentModificationException y detiene el programa.
+     */
+     
+}

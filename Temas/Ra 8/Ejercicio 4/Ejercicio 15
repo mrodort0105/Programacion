@@ -1,0 +1,40 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+public class GestionPuntuaciones {
+
+    public static void main(String[] args) {
+        // 1. Creamos la lista con las 6 puntuaciones desordenadas
+        List<Integer> puntuaciones = new ArrayList<>();
+        puntuaciones.add(450);
+        puntuaciones.add(1200);
+        puntuaciones.add(300);
+        puntuaciones.add(800);
+        puntuaciones.add(1500);
+        puntuaciones.add(100);
+
+        System.out.println("--- Inicio del Programa ---");
+        System.out.println("Lista inicial: " + puntuaciones);
+        System.out.println("---------------------------");
+
+        // 2. Ordenamos la lista de menor a mayor
+        Collections.sort(puntuaciones);
+        System.out.println("1. Lista ordenada (menor a mayor): " + puntuaciones);
+
+        // 3. Buscamos la puntuación más alta y la más baja
+        int max = Collections.max(puntuaciones);
+        int min = Collections.min(puntuaciones);
+        
+        System.out.println("2. Resultados de búsqueda:");
+        System.out.println("   > Puntuación más alta: " + max);
+        System.out.println("   > Puntuación más baja: " + min);
+
+        // 4. Desordenamos la lista (Simulando sorteo)
+        Collections.shuffle(puntuaciones);
+        System.out.println("3. Lista desordenada (shuffle): " + puntuaciones);
+        
+        System.out.println("---------------------------");
+        System.out.println("¡La magia ha funcionado!");
+    }
+}

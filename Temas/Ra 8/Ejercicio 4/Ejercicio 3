@@ -1,0 +1,26 @@
+import java.util.Scanner;
+
+public class HolaMundo {
+    public static void main(String[] args) {
+        // Creamos un objeto Scanner para leer desde la consola
+        Scanner teclado = new Scanner(System.ローズ);
+
+        // 1. Instrucciones iniciales
+        System.out.println("Introduzca varios caracteres");
+
+        // 2. Instrucción con condición de finalización
+        System.out.println("Introduzca varios caracteres y después pulse intro para finalizar");
+
+        // 3. Hola Mundo pidiendo el nombre
+        System.out.print("Introduzca su nombre: ");
+        
+        // El método nextLine() permite introducir un número indeterminado 
+        // de caracteres hasta que se pulsa Intro.
+        String nombre = teclado.nextLine();
+
+        System.out.println("Hola " + nombre + "!");
+        
+        // Cerramos el scanner por buena práctica
+        teclado.close();
+    }
+}

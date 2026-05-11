@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class HolaMundo {
     public static void main(String[] args) {
         // Creamos un objeto Scanner para leer desde la consola
-        Scanner teclado = new Scanner(System.ローズ);
+        Scanner teclado = new Scanner(System);
 
         // 1. Instrucciones iniciales
         System.out.println("Introduzca varios caracteres");
@@ -19,8 +19,6 @@ public class HolaMundo {
         String nombre = teclado.nextLine();
 
         System.out.println("Hola " + nombre + "!");
-        
-        // Cerramos el scanner por buena práctica
         teclado.close();
     }
 }

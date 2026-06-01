@@ -1,0 +1,10 @@
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+public class Main {
+    public static void main(String[] args) {
+        EventoMusical evento = new EventoMusical("Rock in Rio", LocalDate.of(2026, 7, 15), new BigDecimal("150500.75"));
+        
+        System.out.println("Evento creado: " + evento.getNombre() + " el " + evento.getFecha());
+    }
+}

@@ -1,0 +1,40 @@
+import java.sql.*;
+
+public class Ejercicio10 {
+    private static final String URL = "jdbc:mariadb://localhost:3306/tienda";
+    private static final String USER = "Miguel";
+    private static final String PASSWORD = "Miguel";
+
+    public static void main(String[] args) {
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             Statement stmt = conn.createStatement()) {
+
+            // 1. Borrar todos los registros
+            stmt.executeUpdate("DELETE FROM productos");
+
+            // 2. Insertar 3 nuevos registros usando PreparedStatement (Práctica recomendada)
+            String sqlInsert = "INSERT INTO productos (id, nombre, descripcion, precio, pais) VALUES (?, ?, ?, ?, ?)";
+            try (PreparedStatement pstmt = conn.prepareStatement(sqlInsert)) {
+                // Producto 1
+                pstmt.setInt(1, 1); pstmt.setString(2, "manzana"); 
+                pstmt.setString(3, "Manzanas golden"); pstmt.setInt(4, 50); pstmt.setString(5, "Francia");
+                pstmt.executeUpdate();
+                // Producto 2
+                pstmt.setInt(1, 2); pstmt.setString(2, "pera"); 
+                pstmt.setString(3, "Peras conferencia"); pstmt.setInt(4, 25); pstmt.setString(5, "Espana");
+                pstmt.executeUpdate();
+                // Producto 3
+                pstmt.setInt(1, 3); pstmt.setString(2, "uva"); 
+                pstmt.setString(3, "Uvas groumet"); pstmt.setInt(4, 30); pstmt.setString(5, "Espana");
+                pstmt.executeUpdate();
+            }
+
+            // 3. Modificar precio de la pera a 20 céntimos
+            stmt.executeUpdate("UPDATE productos SET precio = 20 WHERE nombre = 'pera'");
+            System.out.println("Operaciones de actualización completadas.");
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}

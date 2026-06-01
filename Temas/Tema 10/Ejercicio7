@@ -1,0 +1,37 @@
+import javax.persistence.*;
+
+public class Ejercicio7 {
+    public static void main(String[] args) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("objectdb:eventos.odb");
+        EntityManager em = emf.createEntityManager();
+        em.getTransaction().begin();
+
+        // 1. Clonar el primer evento con otro ID antes de borrar
+        EventoMusical original = em.find(EventoMusical.class, 1L);
+        if(original != null) {
+            EventoMusical copia = new EventoMusical();
+            copia.setNombre(original.getNombre() + " - Copia");
+            copia.setFecha(original.getFecha());
+            copia.setRecaudacion(original.getRecaudacion());
+            copia.setGenero(original.getGenero());
+            em.persist(copia);
+            
+            // Borrar el primero por Identificador
+            em.remove(original);
+        }
+
+        // 2. Borrar el segundo con JPQL Estático
+        Query qEst = em.createQuery("DELETE FROM EventoMusical e WHERE e.id = 11");
+        qEst.executeUpdate();
+
+        // 3. Borrar el segundo con JPQL Dinámico
+        Long idBorrar = 11L;
+        Query qDin = em.createQuery("DELETE FROM EventoMusical e WHERE e.id = :id");
+        qDin.setParameter("id", idBorrar);
+        qDin.executeUpdate();
+
+        em.getTransaction().commit();
+        em.close();
+        emf.close();
+    }
+}

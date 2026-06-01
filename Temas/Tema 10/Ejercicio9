@@ -1,0 +1,19 @@
+-- Entrar a MariaDB: mariadb -u root -p
+CREATE DATABASE IF NOT EXISTS tienda;
+USE tienda;
+
+CREATE TABLE IF NOT EXISTS productos (
+    id INT PRIMARY KEY,
+    nombre VARCHAR(50),
+    descripcion VARCHAR(100),
+    precio INT, -- Guardado en céntimos según los datos posteriores
+    pais VARCHAR(50)
+);
+
+-- Inserción de 3 productos cualesquiera
+INSERT INTO productos VALUES (10, 'Teclado', 'Teclado Mecánico RGB', 4500, 'China');
+INSERT INTO productos VALUES (11, 'Ratón', 'Ratón Óptico Inalámbrico', 2500, 'Vietnam');
+INSERT INTO productos VALUES (12, 'Monitor', 'Monitor 4K 27 pulgadas', 32000, 'Corea');
+
+-- Mostrar ordenados de mayor a menor precio
+SELECT * FROM productos ORDER BY precio DESC;

@@ -1,0 +1,22 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class Ejercicio8 {
+    private static final String URL = "jdbc:mariadb://localhost:3306/tienda"; 
+    private static final String USER = "Miguel";
+    private static final String PASSWORD = "Miguel"; // Cambia según tu configuración
+
+    public static void main(String[] args) {
+        try {
+            // Cargar el driver explícitamente (opcional en JDBC moderno pero solicitado)
+            Class.forName("org.mariadb.jdbc.Driver");
+            
+            try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+                System.out.println("Conexión exitosa");
+            }
+        } catch (ClassNotFoundException | SQLException e) {
+            System.err.println("No se pudo conectar: " + e.getMessage());
+        }
+    }
+}

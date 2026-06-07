@@ -1,0 +1,30 @@
+import javax.persistence.*;
+import java.util.List;
+
+public class Ejercicio5 {
+    public static void main(String[] args) {
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("objectdb:eventos.odb");
+        EntityManager em = emf.createEntityManager();
+
+        // 1. Imprimir el primer evento utilizando el identificador (Suponiendo ID = 1)
+        EventoMusical ev1 = em.find(EventoMusical.class, 1L);
+        System.out.println("Por ID: " + (ev1 != null ? ev1.getNombre() : "No encontrado"));
+
+        // 2. Imprimir el segundo evento usando JPQL Estático
+        TypedQuery<EventoMusical> queryEstatica = em.createQuery(
+            "SELECT e FROM EventoMusical e WHERE e.nombre = 'Metal Absolute'", EventoMusical.class);
+        EventoMusical ev2Est = queryEstatica.getSingleResult();
+        System.out.println("JPQL Estático: " + ev2Est.getNombre());
+
+        // 3. Imprimir el segundo evento usando JPQL Dinámico (con parámetros)
+        String nombreBuscar = "Metal Absolute";
+        TypedQuery<EventoMusical> queryDinamica = em.createQuery(
+            "SELECT e FROM EventoMusical e WHERE e.nombre = :name", EventoMusical.class);
+        queryDinamica.setParameter("name", nombreBuscar);
+        EventoMusical ev2Din = queryDinamica.getSingleResult();
+        System.out.println("JPQL Dinámico: " + ev2Din.getNombre());
+
+        em.close();
+        emf.close();
+    }
+}
